@@ -1,17 +1,19 @@
 package com.gitTraining
 
+fun computeFibbonaciNumber(position: Int?, recursion: Boolean = false): Int {
 
-fun computeFibbonaciNumber(position: Int?): Int {
     var notNullPosition = position
     if (notNullPosition == null) {
         notNullPosition = 1
     }
+    if (recursion) return recursiveFibbonachi(notNullPosition)
     if (notNullPosition == 0) return 0
-    if (notNullPosition < 0) return computeNegativeFibbonachi(notNullPosition)
+    if (notNullPosition < 0) {
+        val notNullPositionIsOdd = notNullPosition % 2 == -1
+        return if (notNullPositionIsOdd) computeFibbonaciNumber(-notNullPosition) else (computeFibbonaciNumber(-notNullPosition) * -1)}
     if (notNullPosition <= 2) return 1
     var i = 1
     var j = 1
-
 
     var currentPosition = 2
     while (currentPosition < notNullPosition) {
@@ -37,4 +39,14 @@ fun computeNegativeFibbonachi(position:Int): Int {
     val resultIsNegative = position % 2 == 0
     val absoluteResult = computeFibbonaciNumber(-position)
     return if (resultIsNegative) (absoluteResult * -1) else absoluteResult
+}
+
+fun recursiveFibbonachi(initialPosition: Int, left: Int = 0, right: Int = 1, position: Int = initialPosition): Int {
+    if (initialPosition == 0) return 0
+    if (position == 0) return left
+    if (initialPosition > 0) {
+        return recursiveFibbonachi(initialPosition, right, left + right, position - 1)
+    } else {
+        return recursiveFibbonachi(initialPosition, right - left, left, position + 1)
+    }
 }
